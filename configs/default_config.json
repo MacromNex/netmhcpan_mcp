@@ -1,0 +1,25 @@
+{
+  "_description": "Default configuration for NetMHCpan MCP scripts",
+  "_version": "1.0.0",
+  "_created": "2025-12-21",
+
+  "common": {
+    "log_level": "INFO",
+    "output_format": "text"
+  },
+
+  "netmhcpan": {
+    "default_allele": "HLA-A02:01",
+    "rank_thresholds": {
+      "strong_binder": 0.5,
+      "weak_binder": 2.0
+    },
+    "tmpdir": "/tmp"
+  },
+
+  "paths": {
+    "data_dir": "examples/data",
+    "results_dir": "results",
+    "models_dir": "repo/netMHCpan-4.2"
+  }
+}

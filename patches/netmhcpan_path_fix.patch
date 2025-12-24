@@ -1,0 +1,20 @@
+--- repo/netMHCpan-4.2/netMHCpan.bak	2025-12-21 06:21:30.000000000 +0000
++++ repo/netMHCpan-4.2/netMHCpan	2025-12-21 06:21:45.000000000 +0000
+@@ -11,7 +11,7 @@
+ ###############################################################################
+
+ # full path to the NetMHCpan 4.2 directory (mandatory)
+-setenv	NMHOME	/tools/src/netMHCpan-4.2
++setenv	NMHOME	/home/xux/Desktop/ProteinMCP/ProteinMCP/tool-mcps/netmhcpan_mcp/repo/netMHCpan-4.2
+
+ # determine where to store temporary files (must be writable to all users)
+
+@@ -38,7 +38,7 @@
+ if ( -x $NETMHCpan/bin/netMHCpan-4.2 ) then
+    $NETMHCpan/bin/netMHCpan-4.2 $*
+ else
+-   echo netMHCpan: no binaries found for $PLATFORM $NETMHCpan/bin/netMHCpan
++   echo netMHCpan: no binaries found for $PLATFORM $NETMHCpan/bin/netMHCpan-4.2
+ endif
+
+ # end of script ===============================================================

@@ -1,0 +1,56 @@
+{
+  "_description": "Configuration for excel_export.py script",
+  "_source": "Extracted from examples/use_case_5_excel_export.py",
+  "_script": "scripts/excel_export.py",
+
+  "alleles": ["HLA-A02:01"],
+  "excel_format": "tab_delimited",
+  "rank_threshold": null,
+  "output_format": "text",
+  "log_level": "INFO",
+
+  "excel_formats": {
+    "tab_delimited": {
+      "extension": ".xls",
+      "description": "Tab-separated values, Excel compatible",
+      "dependencies": "none"
+    },
+    "xlsx": {
+      "extension": ".xlsx",
+      "description": "Native Excel format",
+      "dependencies": "pandas, openpyxl"
+    }
+  },
+
+  "examples": {
+    "dual_allele": {
+      "alleles": ["HLA-A01:01", "HLA-A02:01"],
+      "excel_format": "tab_delimited",
+      "description": "Compare two common HLA-A alleles"
+    },
+    "hla_a_panel": {
+      "alleles": ["HLA-A01:01", "HLA-A02:01", "HLA-A03:01", "HLA-A11:01"],
+      "excel_format": "xlsx",
+      "description": "HLA-A allele panel for comprehensive screening"
+    },
+    "mixed_class": {
+      "alleles": ["HLA-A02:01", "HLA-B07:02", "HLA-C07:01"],
+      "excel_format": "tab_delimited",
+      "description": "Mixed HLA Class I alleles"
+    },
+    "filtered_panel": {
+      "alleles": ["HLA-A02:01", "HLA-A24:02", "HLA-B35:01"],
+      "rank_threshold": 2.0,
+      "excel_format": "xlsx",
+      "description": "Multi-allele screening with weak binder filtering"
+    }
+  },
+
+  "common_allele_sets": {
+    "caucasian_frequent": ["HLA-A01:01", "HLA-A02:01", "HLA-A03:01", "HLA-B07:02", "HLA-B08:01"],
+    "asian_frequent": ["HLA-A02:01", "HLA-A24:02", "HLA-A11:01", "HLA-B40:01", "HLA-B15:01"],
+    "minimal_panel": ["HLA-A02:01", "HLA-B07:02"],
+    "comprehensive": ["HLA-A01:01", "HLA-A02:01", "HLA-A03:01", "HLA-A11:01", "HLA-A23:01", "HLA-A24:02",
+                      "HLA-B07:02", "HLA-B08:01", "HLA-B15:01", "HLA-B35:01", "HLA-B40:01", "HLA-B44:02"]
+  }
+}

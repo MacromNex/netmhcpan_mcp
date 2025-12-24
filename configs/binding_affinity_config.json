@@ -1,0 +1,57 @@
+{
+  "_description": "Configuration for binding_affinity_prediction.py script",
+  "_source": "Extracted from examples/use_case_4_binding_affinity_prediction.py",
+  "_script": "scripts/binding_affinity_prediction.py",
+
+  "allele": "HLA-A02:01",
+  "prediction_mode": "both",
+  "rank_threshold": null,
+  "output_format": "text",
+  "log_level": "INFO",
+
+  "prediction_modes": {
+    "EL": {
+      "name": "Eluted Ligand",
+      "description": "Predicts likelihood of peptide elution from MHC",
+      "output_columns": ["EL_score", "EL_rank"]
+    },
+    "BA": {
+      "name": "Binding Affinity",
+      "description": "Predicts IC50 binding affinity in nanomolar",
+      "output_columns": ["BA_score", "BA_rank", "IC50_nM"]
+    },
+    "both": {
+      "name": "Both EL and BA",
+      "description": "Comprehensive prediction with both scores",
+      "output_columns": ["EL_score", "EL_rank", "BA_score", "BA_rank", "IC50_nM"]
+    }
+  },
+
+  "examples": {
+    "comprehensive": {
+      "prediction_mode": "both",
+      "description": "Full prediction with both EL and BA scores"
+    },
+    "binding_only": {
+      "prediction_mode": "BA",
+      "description": "Binding affinity prediction only"
+    },
+    "elution_only": {
+      "prediction_mode": "EL",
+      "description": "Eluted ligand prediction only"
+    },
+    "high_affinity": {
+      "prediction_mode": "both",
+      "rank_threshold": 0.5,
+      "description": "Focus on strong binders only (≤0.5% rank)"
+    }
+  },
+
+  "thresholds": {
+    "strong_binder_rank": 0.5,
+    "weak_binder_rank": 2.0,
+    "strong_binder_ic50_nm": 500,
+    "weak_binder_ic50_nm": 5000,
+    "description": "Standard classification thresholds"
+  }
+}

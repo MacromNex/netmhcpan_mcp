@@ -1,0 +1,39 @@
+{
+  "_description": "Configuration for custom_mhc_prediction.py script",
+  "_source": "Extracted from examples/use_case_3_custom_mhc_prediction.py",
+  "_script": "scripts/custom_mhc_prediction.py",
+
+  "mhc_name": "USER_DEF",
+  "rank_threshold": null,
+  "output_format": "text",
+  "log_level": "INFO",
+
+  "examples": {
+    "basic_custom": {
+      "mhc_name": "USER_DEF",
+      "description": "Basic custom MHC prediction with default name"
+    },
+    "named_custom": {
+      "mhc_name": "MY_CUSTOM_HLA",
+      "description": "Custom MHC with specific identifier name"
+    },
+    "filtered_custom": {
+      "mhc_name": "CUSTOM_B0702",
+      "rank_threshold": 1.0,
+      "description": "Custom MHC with strict filtering (≤1% rank)"
+    }
+  },
+
+  "mhc_requirements": {
+    "sequence_format": "FASTA",
+    "min_length": 300,
+    "max_length": 400,
+    "description": "MHC sequence should be ~350 amino acids for Class I"
+  },
+
+  "notes": {
+    "usage": "Provide MHC sequence as FASTA file",
+    "naming": "mhc_name will be used as identifier in results",
+    "similarity": "NetMHCpan will find closest known allele and report distance"
+  }
+}

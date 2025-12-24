@@ -1,0 +1,40 @@
+{
+  "_description": "Configuration for protein_prediction.py script",
+  "_source": "Extracted from examples/use_case_2_protein_prediction.py",
+  "_script": "scripts/protein_prediction.py",
+
+  "allele": "HLA-A02:01",
+  "peptide_length": "9",
+  "rank_threshold": null,
+  "sort_output": false,
+  "output_format": "text",
+  "log_level": "INFO",
+
+  "examples": {
+    "single_length": {
+      "peptide_length": "9",
+      "description": "Predict 9-mer peptides only"
+    },
+    "multiple_lengths": {
+      "peptide_length": "8,9,10",
+      "description": "Predict 8, 9, and 10-mer peptides"
+    },
+    "sorted": {
+      "peptide_length": "9",
+      "sort_output": true,
+      "description": "Sort results by binding affinity"
+    },
+    "filtered_multi": {
+      "peptide_length": "8,9,10",
+      "rank_threshold": 2.0,
+      "sort_output": true,
+      "description": "Multi-length prediction with filtering and sorting"
+    }
+  },
+
+  "peptide_lengths": {
+    "supported": ["8", "9", "10", "11"],
+    "default": "9",
+    "description": "Supported peptide lengths for MHC Class I"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "_description": "Configuration for peptide_prediction.py script",
+  "_source": "Extracted from examples/use_case_1_peptide_prediction.py",
+  "_script": "scripts/peptide_prediction.py",
+
+  "allele": "HLA-A02:01",
+  "rank_threshold": null,
+  "output_format": "text",
+  "log_level": "INFO",
+
+  "examples": {
+    "basic": {
+      "allele": "HLA-A02:01",
+      "description": "Basic peptide prediction for HLA-A02:01"
+    },
+    "hla_b": {
+      "allele": "HLA-B07:02",
+      "description": "Peptide prediction for HLA-B07:02"
+    },
+    "filtered": {
+      "allele": "HLA-A02:01",
+      "rank_threshold": 2.0,
+      "description": "Filter results to ≤2% rank only"
+    }
+  },
+
+  "supported_alleles": [
+    "HLA-A01:01", "HLA-A02:01", "HLA-A03:01", "HLA-A11:01", "HLA-A23:01", "HLA-A24:02",
+    "HLA-B07:02", "HLA-B08:01", "HLA-B15:01", "HLA-B35:01", "HLA-B40:01", "HLA-B44:02",
+    "HLA-C03:03", "HLA-C04:01", "HLA-C06:02", "HLA-C07:01", "HLA-C12:03", "HLA-C14:02"
+  ]
+}
