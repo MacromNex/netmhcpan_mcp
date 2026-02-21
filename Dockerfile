@@ -23,25 +23,34 @@ RUN pip install --no-cache-dir \
     websockets \
     rich
 
-# Copy NetMHCpan binary distribution
-# The binary is gitignored but should be provided via:
-# - Local builds: extract netMHCpan-4.2bstatic.Linux.tar.gz into repo/
-# - GitHub Actions: use GitHub Actions cache/artifacts (see .github/workflows/docker-build-netmhc.yml)
+# Download and extract NetMHCpan binary distribution
+# Source: http://www.cbs.dtu.dk/services/NetMHCpan/
+# License: Free for academic/non-commercial use
+# See: http://www.cbs.dtu.dk/services/NetMHCpan/license.php
 RUN mkdir -p /app/repo && \
-    if [ ! -d repo/netMHCpan-4.2 ]; then \
-      echo "ERROR: NetMHCpan binary directory not found at repo/netMHCpan-4.2"; \
-      echo ""; \
-      echo "For LOCAL BUILDS:"; \
-      echo "  1. Download netMHCpan-4.2 from http://www.cbs.dtu.dk/services/NetMHCpan/"; \
-      echo "  2. Extract: tar -xzf netMHCpan-4.2bstatic.Linux.tar.gz -C tool-mcps/netmhcpan_mcp/repo/"; \
-      echo "  3. Re-run Docker build"; \
-      echo ""; \
-      echo "For CI/CD (GitHub Actions):"; \
-      echo "  See .github/workflows/docker-build-netmhc.yml for setup instructions"; \
-      echo ""; \
-      exit 1; \
+    if [ -d repo/netMHCpan-4.2 ]; then \
+      echo "Using cached NetMHCpan binary"; \
+      cp -r repo/netMHCpan-4.2 /app/repo/; \
+    else \
+      echo "Downloading NetMHCpan from official source..."; \
+      for attempt in 1 2 3; do \
+        echo "Download attempt $attempt/3"; \
+        wget --no-verbose -O /tmp/netMHCpan-4.2.tar.gz \
+          "http://www.cbs.dtu.dk/services/NetMHCpan/netMHCpan-4.2b.Linux.tar.gz" && \
+          tar -xzf /tmp/netMHCpan-4.2.tar.gz -C /app/repo/ && \
+          rm /tmp/netMHCpan-4.2.tar.gz && \
+          break; \
+        if [ $attempt -lt 3 ]; then \
+          echo "Retry in 5 seconds..."; \
+          sleep 5; \
+        else \
+          echo "ERROR: Failed to download NetMHCpan after 3 attempts"; \
+          echo "Please check your internet connection or download manually from:"; \
+          echo "  http://www.cbs.dtu.dk/services/NetMHCpan/"; \
+          exit 1; \
+        fi; \
+      done; \
     fi && \
-    cp -r repo/netMHCpan-4.2 /app/repo/ && \
     sed -i 's|setenv\tNMHOME\t.*|setenv\tNMHOME\t/app/repo/netMHCpan-4.2|' \
         /app/repo/netMHCpan-4.2/netMHCpan && \
     chmod +x /app/repo/netMHCpan-4.2/netMHCpan && \
@@ -50,6 +59,14 @@ RUN mkdir -p /app/repo && \
 # Set environment variables for NetMHCpan
 ENV NMHOME=/app/repo/netMHCpan-4.2
 ENV TMPDIR=/tmp
+
+# ====== LICENSE NOTICE ======
+# NetMHCpan is developed by CBS (Center for Biological Sequence Analysis),
+# Technical University of Denmark (DTU).
+# It is free for academic/non-commercial use.
+# For commercial use or license details, visit:
+#   http://www.cbs.dtu.dk/services/NetMHCpan/
+# =============================
 
 # Copy source code
 COPY src/ ./src/
