@@ -39,9 +39,13 @@ ENV TMPDIR=/tmp
 
 # Copy source code
 COPY src/ ./src/
+RUN chmod -R a+r /app/src/
 COPY scripts/ ./scripts/
+RUN chmod -R a+r /app/scripts/
 COPY configs/ ./configs/
+RUN chmod -R a+r /app/configs/
 COPY examples/ ./examples/
+RUN chmod -R a+r /app/examples/
 
 # Create working directories
 RUN mkdir -p /app/jobs /app/results /tmp
