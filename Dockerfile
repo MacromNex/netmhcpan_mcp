@@ -23,15 +23,21 @@ RUN pip install --no-cache-dir \
     websockets \
     rich
 
-# Copy NetMHCpan binary distribution and bake it into the image
-# This avoids repetitive downloading of the checkpoint/data files
-COPY repo/netMHCpan-4.2/ /app/repo/netMHCpan-4.2/
-
-# Patch the netMHCpan wrapper script to use the container path
-RUN sed -i 's|setenv\tNMHOME\t.*|setenv\tNMHOME\t/app/repo/netMHCpan-4.2|' \
-    /app/repo/netMHCpan-4.2/netMHCpan && \
-    chmod +x /app/repo/netMHCpan-4.2/netMHCpan && \
-    chmod +x /app/repo/netMHCpan-4.2/Linux_x86_64/bin/*
+# Copy NetMHCpan binary distribution if available (gitignored, so only in local builds)
+# For CI/CD: NetMHCpan can be provided via artifact storage or skipped
+RUN mkdir -p /app/repo && \
+    if [ -d repo/netMHCpan-4.2 ]; then \
+      echo "Copying local NetMHCpan binary"; \
+      cp -r repo/netMHCpan-4.2 /app/repo/ && \
+      sed -i 's|setenv\tNMHOME\t.*|setenv\tNMHOME\t/app/repo/netMHCpan-4.2|' \
+          /app/repo/netMHCpan-4.2/netMHCpan && \
+      chmod +x /app/repo/netMHCpan-4.2/netMHCpan && \
+      chmod +x /app/repo/netMHCpan-4.2/Linux_x86_64/bin/*; \
+    else \
+      echo "WARNING: NetMHCpan binary directory not found at repo/netMHCpan-4.2"; \
+      echo "For local builds: extract netMHCpan-4.2bstatic.Linux.tar.gz into repo/"; \
+      echo "For GitHub Actions: use artifact storage or external configuration"; \
+    fi
 
 # Set environment variables for NetMHCpan
 ENV NMHOME=/app/repo/netMHCpan-4.2
